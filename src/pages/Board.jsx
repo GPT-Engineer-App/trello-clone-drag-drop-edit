@@ -220,6 +220,7 @@ const Board = () => {
                                       borderRadius="md"
                                       width="100%"
                                       boxShadow="md"
+                                      onClick={() => handleEdit(columnId, item.id)}
                                     >
                                       {editingCard && editingCard.columnId === columnId && editingCard.itemId === item.id ? (
                                         <>
@@ -234,12 +235,7 @@ const Board = () => {
                                           <Button onClick={handleCancel}>Cancel</Button>
                                         </>
                                       ) : (
-                                        <>
-                                          <Text>{item.content}</Text>
-                                          <Button size="sm" onClick={() => handleEdit(columnId, item.id)}>
-                                            Edit
-                                          </Button>
-                                        </>
+                                        <Text>{item.content}</Text>
                                       )}
                                     </Box>
                                   )}
