@@ -51,11 +51,18 @@ const Board = () => {
   const [newColumnName, setNewColumnName] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [sourceColumnId, setSourceColumnId] = useState(null);
+  const [hoveredColumnId, setHoveredColumnId] = useState(null);
 
-  const onDragStart = () => setIsDragging(true);
+  const onDragStart = (start) => {
+    setIsDragging(true);
+    setSourceColumnId(start.source.droppableId);
+  };
 
   const onDragEnd = (result) => {
     setIsDragging(false);
+    setSourceColumnId(null);
+    setHoveredColumnId(null);
     if (!result.destination) return;
 
     const { source, destination, type } = result;
@@ -103,6 +110,14 @@ const Board = () => {
           items: copiedItems,
         },
       });
+    }
+  };
+
+  const onDragUpdate = (update) => {
+    if (update.destination) {
+      setHoveredColumnId(update.destination.droppableId);
+    } else {
+      setHoveredColumnId(null);
     }
   };
 
@@ -178,7 +193,7 @@ const Board = () => {
   return (
     <>
       {showConfetti && <Confetti />}
-      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart} onDragUpdate={onDragUpdate}>
         <Droppable droppableId="all-columns" direction="horizontal" type="COLUMN">
           {(provided) => (
             <Box display="flex" {...provided.droppableProps} ref={provided.innerRef} p={4}>
@@ -190,7 +205,7 @@ const Board = () => {
                       <Box
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        bg="gray.100"
+                        bg={columnId === sourceColumnId ? "gray.300" : columnId === hoveredColumnId ? "gray.500" : "gray.100"}
                         p={4}
                         borderRadius="md"
                         width="24%"
