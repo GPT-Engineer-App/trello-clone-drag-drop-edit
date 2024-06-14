@@ -110,22 +110,20 @@ const Board = () => {
   };
 
   const handleSave = () => {
-    if (editingCard) {
-      const { columnId, itemId } = editingCard;
-      const column = columns[columnId];
-      const updatedItems = column.items.map((item) =>
-        item.id === itemId ? { ...item, content: newContent } : item
-      );
-      setColumns({
-        ...columns,
-        [columnId]: {
-          ...column,
-          items: updatedItems,
-        },
-      });
-      setEditingCard(null);
-      setNewContent("");
-    }
+    const { columnId, itemId } = editingCard;
+    const column = columns[columnId];
+    const updatedItems = column.items.map((item) =>
+      item.id === itemId ? { ...item, content: newContent } : item
+    );
+    setColumns({
+      ...columns,
+      [columnId]: {
+        ...column,
+        items: updatedItems,
+      },
+    });
+    setEditingCard(null);
+    setNewContent("");
   };
 
   const handleCancel = () => {
@@ -222,7 +220,6 @@ const Board = () => {
                                       borderRadius="md"
                                       width="100%"
                                       boxShadow="md"
-                                      onClick={() => handleEdit(columnId, item.id)}
                                     >
                                       {editingCard && editingCard.columnId === columnId && editingCard.itemId === item.id ? (
                                         <>
@@ -237,7 +234,12 @@ const Board = () => {
                                           <Button onClick={handleCancel}>Cancel</Button>
                                         </>
                                       ) : (
-                                        <Text>{item.content}</Text>
+                                        <>
+                                          <Text>{item.content}</Text>
+                                          <Button size="sm" onClick={() => handleEdit(columnId, item.id)}>
+                                            Edit
+                                          </Button>
+                                        </>
                                       )}
                                     </Box>
                                   )}
