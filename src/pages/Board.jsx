@@ -51,11 +51,25 @@ const Board = () => {
   const [newColumnName, setNewColumnName] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [draggedFromColumn, setDraggedFromColumn] = useState(null);
+  const [hoveredColumn, setHoveredColumn] = useState(null);
 
-  const onDragStart = () => setIsDragging(true);
+  const onDragStart = (start) => {
+    setIsDragging(true);
+    setDraggedFromColumn(start.source.droppableId);
+  };
+
+  const onDragUpdate = (update) => {
+    if (update.destination) {
+      setHoveredColumn(update.destination.droppableId);
+    }
+  };
 
   const onDragEnd = (result) => {
     setIsDragging(false);
+    setDraggedFromColumn(null);
+    setHoveredColumn(null);
+
     if (!result.destination) return;
 
     const { source, destination, type } = result;
@@ -178,19 +192,21 @@ const Board = () => {
   return (
     <>
       {showConfetti && <Confetti />}
-      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart} onDragUpdate={onDragUpdate}>
         <Droppable droppableId="all-columns" direction="horizontal" type="COLUMN">
           {(provided) => (
             <Box display="flex" {...provided.droppableProps} ref={provided.innerRef} p={4}>
               {columnOrder.map((columnId, index) => {
                 const column = columns[columnId];
+                const isDimmed = isDragging && draggedFromColumn === columnId;
+                const isHovered = isDragging && hoveredColumn === columnId;
                 return (
                   <Draggable key={columnId} draggableId={columnId} index={index}>
                     {(provided) => (
                       <Box
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        bg="gray.100"
+                        bg={isHovered ? "gray.300" : isDimmed ? "gray.200" : "gray.100"}
                         p={4}
                         borderRadius="md"
                         width="24%"
