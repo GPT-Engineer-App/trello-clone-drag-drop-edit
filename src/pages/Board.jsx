@@ -31,11 +31,18 @@ const initialColumns = {
       { id: "8", content: "As an administrator I want to be able to login, create new account, delete account or merge few accounts together." },
     ],
   },
+  completed: {
+    name: "Completed",
+    items: [
+      { id: "9", content: "Completed task 1" },
+      { id: "10", content: "Completed task 2" },
+    ],
+  },
 };
 
 const Board = () => {
   const [columns, setColumns] = useState(initialColumns);
-  const [columnOrder, setColumnOrder] = useState(Object.keys(initialColumns));
+  const [columnOrder, setColumnOrder] = useState([...Object.keys(initialColumns), "completed"]);
   const [editingCard, setEditingCard] = useState(null);
   const [newContent, setNewContent] = useState("");
   const [editingColumn, setEditingColumn] = useState(null);
