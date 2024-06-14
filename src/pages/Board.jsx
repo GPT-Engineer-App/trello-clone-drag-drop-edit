@@ -50,8 +50,12 @@ const Board = () => {
   const [editingColumn, setEditingColumn] = useState(null);
   const [newColumnName, setNewColumnName] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const onDragStart = () => setIsDragging(true);
 
   const onDragEnd = (result) => {
+    setIsDragging(false);
     if (!result.destination) return;
 
     const { source, destination, type } = result;
@@ -174,7 +178,7 @@ const Board = () => {
   return (
     <>
       {showConfetti && <Confetti />}
-      <DragDropContext onDragEnd={onDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
         <Droppable droppableId="all-columns" direction="horizontal" type="COLUMN">
           {(provided) => (
             <Box display="flex" {...provided.droppableProps} ref={provided.innerRef} p={4}>
@@ -218,7 +222,7 @@ const Board = () => {
                             >
                               {column.items.map((item, index) => (
                                 <Draggable key={item.id} draggableId={item.id} index={index}>
-                                  {(provided) => (
+                                  {(provided, snapshot) => (
                                     <Box
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
@@ -232,6 +236,13 @@ const Board = () => {
                                         if (!e.target.closest('.save-button') && !e.target.closest('.cancel-button')) {
                                           handleEdit(columnId, item.id);
                                         }
+                                      }}
+                                      onDragStart={onDragStart}
+                                      onDragEnd={onDragEnd}
+                                      style={{
+                                        ...provided.draggableProps.style,
+                                        boxShadow: snapshot.isDragging ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
+                                        border: snapshot.isDragging ? "2px solid #3182ce" : "none",
                                       }}
                                     >
                                       {editingCard && editingCard.columnId === columnId && editingCard.itemId === item.id ? (
