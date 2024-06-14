@@ -228,7 +228,11 @@ const Board = () => {
                                       borderRadius="md"
                                       width="100%"
                                       boxShadow="md"
-                                      onClick={() => handleEdit(columnId, item.id)}
+                                      onClick={(e) => {
+                                        if (!e.target.closest('.save-button') && !e.target.closest('.cancel-button')) {
+                                          handleEdit(columnId, item.id);
+                                        }
+                                      }}
                                     >
                                       {editingCard && editingCard.columnId === columnId && editingCard.itemId === item.id ? (
                                         <>
@@ -237,10 +241,12 @@ const Board = () => {
                                             onChange={(e) => setNewContent(e.target.value)}
                                             mb={2}
                                           />
-                                          <Button onClick={handleSave} colorScheme="blue" mr={2}>
+                                          <Button className="save-button" onClick={(e) => { e.stopPropagation(); handleSave(); }} colorScheme="blue" mr={2}>
                                             Save
                                           </Button>
-                                          <Button onClick={handleCancel}>Cancel</Button>
+                                          <Button className="cancel-button" onClick={(e) => { e.stopPropagation(); handleCancel(); }}>
+                                            Cancel
+                                          </Button>
                                         </>
                                       ) : (
                                         <>
