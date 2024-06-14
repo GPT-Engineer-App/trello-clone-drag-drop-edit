@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Button, Input, Text, VStack } from "@chakra-ui/react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import Confetti from "react-confetti";
+import { FaPlus } from "react-icons/fa";
 
 const initialColumns = {
   backlog: {
@@ -183,19 +184,22 @@ const Board = () => {
                         width="24%"
                         mr={4}
                       >
-                        <Text fontSize="xl" mb={4} {...provided.dragHandleProps} onClick={() => handleColumnEdit(columnId)}>
-                          {editingColumn === columnId ? (
-                            <Input
-                              value={newColumnName}
-                              onChange={(e) => setNewColumnName(e.target.value)}
-                              onBlur={handleColumnSave}
-                              onKeyDown={(e) => e.key === "Enter" && handleColumnSave()}
-                              autoFocus
-                            />
-                          ) : (
-                            column.name
-                          )}
-                        </Text>
+                        <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
+                          <Text fontSize="xl" {...provided.dragHandleProps} onClick={() => handleColumnEdit(columnId)}>
+                            {editingColumn === columnId ? (
+                              <Input
+                                value={newColumnName}
+                                onChange={(e) => setNewColumnName(e.target.value)}
+                                onBlur={handleColumnSave}
+                                onKeyDown={(e) => e.key === "Enter" && handleColumnSave()}
+                                autoFocus
+                              />
+                            ) : (
+                              column.name
+                            )}
+                          </Text>
+                          <Button size="sm" onClick={() => handleAddTicket(columnId)} leftIcon={<FaPlus />} />
+                        </Box>
                         <Droppable droppableId={columnId} type="TASK">
                           {(provided) => (
                             <VStack
@@ -245,9 +249,6 @@ const Board = () => {
                             </VStack>
                           )}
                         </Droppable>
-                        <Button mt={4} onClick={() => handleAddTicket(columnId)}>
-                          Add new ticket...
-                        </Button>
                       </Box>
                     )}
                   </Draggable>
