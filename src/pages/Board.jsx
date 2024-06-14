@@ -110,20 +110,22 @@ const Board = () => {
   };
 
   const handleSave = () => {
-    const { columnId, itemId } = editingCard;
-    const column = columns[columnId];
-    const updatedItems = column.items.map((item) =>
-      item.id === itemId ? { ...item, content: newContent } : item
-    );
-    setColumns({
-      ...columns,
-      [columnId]: {
-        ...column,
-        items: updatedItems,
-      },
-    });
-    setEditingCard(null);
-    setNewContent("");
+    if (editingCard) {
+      const { columnId, itemId } = editingCard;
+      const column = columns[columnId];
+      const updatedItems = column.items.map((item) =>
+        item.id === itemId ? { ...item, content: newContent } : item
+      );
+      setColumns({
+        ...columns,
+        [columnId]: {
+          ...column,
+          items: updatedItems,
+        },
+      });
+      setEditingCard(null);
+      setNewContent("");
+    }
   };
 
   const handleCancel = () => {
