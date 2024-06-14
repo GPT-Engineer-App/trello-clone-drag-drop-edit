@@ -38,6 +38,8 @@ const Board = () => {
   const [columnOrder, setColumnOrder] = useState(Object.keys(initialColumns));
   const [editingCard, setEditingCard] = useState(null);
   const [newContent, setNewContent] = useState("");
+  const [editingColumn, setEditingColumn] = useState(null);
+  const [newColumnName, setNewColumnName] = useState("");
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
@@ -127,6 +129,25 @@ const Board = () => {
     });
   };
 
+  const handleColumnEdit = (columnId) => {
+    setEditingColumn(columnId);
+    setNewColumnName(columns[columnId].name);
+  };
+
+  const handleColumnSave = () => {
+    if (editingColumn) {
+      setColumns({
+        ...columns,
+        [editingColumn]: {
+          ...columns[editingColumn],
+          name: newColumnName,
+        },
+      });
+      setEditingColumn(null);
+      setNewColumnName("");
+    }
+  };
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="all-columns" direction="horizontal" type="COLUMN">
@@ -146,8 +167,18 @@ const Board = () => {
                       width="24%"
                       mr={4}
                     >
-                      <Text fontSize="xl" mb={4} {...provided.dragHandleProps}>
-                        {column.name}
+                      <Text fontSize="xl" mb={4} {...provided.dragHandleProps} onClick={() => handleColumnEdit(columnId)}>
+                        {editingColumn === columnId ? (
+                          <Input
+                            value={newColumnName}
+                            onChange={(e) => setNewColumnName(e.target.value)}
+                            onBlur={handleColumnSave}
+                            onKeyDown={(e) => e.key === "Enter" && handleColumnSave()}
+                            autoFocus
+                          />
+                        ) : (
+                          column.name
+                        )}
                       </Text>
                       <Droppable droppableId={columnId} type="TASK">
                         {(provided) => (
