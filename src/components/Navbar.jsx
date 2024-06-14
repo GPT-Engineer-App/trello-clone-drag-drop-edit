@@ -6,7 +6,7 @@ const Navbar = () => {
     <Box bg="blue.500" px={4} py={2}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
         <Box color="white" fontWeight="bold" fontSize="xl">
-          Trello Clone
+          Task Buddy
         </Box>
         <Flex alignItems="center">
           <NavLink to="/" style={{ marginRight: "1rem", color: "white" }}>
