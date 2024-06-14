@@ -110,25 +110,33 @@ const Board = () => {
   };
 
   const handleSave = () => {
-    const { columnId, itemId } = editingCard;
-    const column = columns[columnId];
-    const updatedItems = column.items.map((item) =>
-      item.id === itemId ? { ...item, content: newContent } : item
-    );
-    setColumns({
-      ...columns,
-      [columnId]: {
-        ...column,
-        items: updatedItems,
-      },
-    });
-    setEditingCard(null);
-    setNewContent("");
+    try {
+      const { columnId, itemId } = editingCard;
+      const column = columns[columnId];
+      const updatedItems = column.items.map((item) =>
+        item.id === itemId ? { ...item, content: newContent } : item
+      );
+      setColumns({
+        ...columns,
+        [columnId]: {
+          ...column,
+          items: updatedItems,
+        },
+      });
+      setEditingCard(null);
+      setNewContent("");
+    } catch (error) {
+      console.error("Error saving the card:", error);
+    }
   };
 
   const handleCancel = () => {
-    setEditingCard(null);
-    setNewContent("");
+    try {
+      setEditingCard(null);
+      setNewContent("");
+    } catch (error) {
+      console.error("Error cancelling the edit:", error);
+    }
   };
 
   const handleAddTicket = (columnId) => {
