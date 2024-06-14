@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Input, Text, VStack } from "@chakra-ui/react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import Confetti from "react-confetti";
 
 const initialColumns = {
   backlog: {
@@ -47,6 +48,7 @@ const Board = () => {
   const [newContent, setNewContent] = useState("");
   const [editingColumn, setEditingColumn] = useState(null);
   const [newColumnName, setNewColumnName] = useState("");
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const onDragEnd = (result) => {
     if (!result.destination) return;
@@ -79,6 +81,11 @@ const Board = () => {
           items: destItems,
         },
       });
+
+      if (destination.droppableId === "completed") {
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 3000);
+      }
     } else {
       const column = columns[source.droppableId];
       const copiedItems = [...column.items];
@@ -156,99 +163,102 @@ const Board = () => {
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="all-columns" direction="horizontal" type="COLUMN">
-        {(provided) => (
-          <Box display="flex" {...provided.droppableProps} ref={provided.innerRef} p={4}>
-            {columnOrder.map((columnId, index) => {
-              const column = columns[columnId];
-              return (
-                <Draggable key={columnId} draggableId={columnId} index={index}>
-                  {(provided) => (
-                    <Box
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      bg="gray.100"
-                      p={4}
-                      borderRadius="md"
-                      width="24%"
-                      mr={4}
-                    >
-                      <Text fontSize="xl" mb={4} {...provided.dragHandleProps} onClick={() => handleColumnEdit(columnId)}>
-                        {editingColumn === columnId ? (
-                          <Input
-                            value={newColumnName}
-                            onChange={(e) => setNewColumnName(e.target.value)}
-                            onBlur={handleColumnSave}
-                            onKeyDown={(e) => e.key === "Enter" && handleColumnSave()}
-                            autoFocus
-                          />
-                        ) : (
-                          column.name
-                        )}
-                      </Text>
-                      <Droppable droppableId={columnId} type="TASK">
-                        {(provided) => (
-                          <VStack
-                            {...provided.droppableProps}
-                            ref={provided.innerRef}
-                            spacing={4}
-                            minHeight="200px"
-                          >
-                            {column.items.map((item, index) => (
-                              <Draggable key={item.id} draggableId={item.id} index={index}>
-                                {(provided) => (
-                                  <Box
-                                    ref={provided.innerRef}
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                    bg="white"
-                                    p={4}
-                                    borderRadius="md"
-                                    width="100%"
-                                    boxShadow="md"
-                                  >
-                                    {editingCard && editingCard.columnId === columnId && editingCard.itemId === item.id ? (
-                                      <>
-                                        <Input
-                                          value={newContent}
-                                          onChange={(e) => setNewContent(e.target.value)}
-                                          mb={2}
-                                        />
-                                        <Button onClick={handleSave} colorScheme="blue" mr={2}>
-                                          Save
-                                        </Button>
-                                        <Button onClick={handleCancel}>Cancel</Button>
-                                      </>
-                                    ) : (
-                                      <>
-                                        <Text>{item.content}</Text>
-                                        <Button size="sm" onClick={() => handleEdit(columnId, item.id)}>
-                                          Edit
-                                        </Button>
-                                      </>
-                                    )}
-                                  </Box>
-                                )}
-                              </Draggable>
-                            ))}
-                            {provided.placeholder}
-                          </VStack>
-                        )}
-                      </Droppable>
-                      <Button mt={4} onClick={() => handleAddTicket(columnId)}>
-                        Add new ticket...
-                      </Button>
-                    </Box>
-                  )}
-                </Draggable>
-              );
-            })}
-            {provided.placeholder}
-          </Box>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      {showConfetti && <Confetti />}
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="all-columns" direction="horizontal" type="COLUMN">
+          {(provided) => (
+            <Box display="flex" {...provided.droppableProps} ref={provided.innerRef} p={4}>
+              {columnOrder.map((columnId, index) => {
+                const column = columns[columnId];
+                return (
+                  <Draggable key={columnId} draggableId={columnId} index={index}>
+                    {(provided) => (
+                      <Box
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        bg="gray.100"
+                        p={4}
+                        borderRadius="md"
+                        width="24%"
+                        mr={4}
+                      >
+                        <Text fontSize="xl" mb={4} {...provided.dragHandleProps} onClick={() => handleColumnEdit(columnId)}>
+                          {editingColumn === columnId ? (
+                            <Input
+                              value={newColumnName}
+                              onChange={(e) => setNewColumnName(e.target.value)}
+                              onBlur={handleColumnSave}
+                              onKeyDown={(e) => e.key === "Enter" && handleColumnSave()}
+                              autoFocus
+                            />
+                          ) : (
+                            column.name
+                          )}
+                        </Text>
+                        <Droppable droppableId={columnId} type="TASK">
+                          {(provided) => (
+                            <VStack
+                              {...provided.droppableProps}
+                              ref={provided.innerRef}
+                              spacing={4}
+                              minHeight="200px"
+                            >
+                              {column.items.map((item, index) => (
+                                <Draggable key={item.id} draggableId={item.id} index={index}>
+                                  {(provided) => (
+                                    <Box
+                                      ref={provided.innerRef}
+                                      {...provided.draggableProps}
+                                      {...provided.dragHandleProps}
+                                      bg="white"
+                                      p={4}
+                                      borderRadius="md"
+                                      width="100%"
+                                      boxShadow="md"
+                                    >
+                                      {editingCard && editingCard.columnId === columnId && editingCard.itemId === item.id ? (
+                                        <>
+                                          <Input
+                                            value={newContent}
+                                            onChange={(e) => setNewContent(e.target.value)}
+                                            mb={2}
+                                          />
+                                          <Button onClick={handleSave} colorScheme="blue" mr={2}>
+                                            Save
+                                          </Button>
+                                          <Button onClick={handleCancel}>Cancel</Button>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Text>{item.content}</Text>
+                                          <Button size="sm" onClick={() => handleEdit(columnId, item.id)}>
+                                            Edit
+                                          </Button>
+                                        </>
+                                      )}
+                                    </Box>
+                                  )}
+                                </Draggable>
+                              ))}
+                              {provided.placeholder}
+                            </VStack>
+                          )}
+                        </Droppable>
+                        <Button mt={4} onClick={() => handleAddTicket(columnId)}>
+                          Add new ticket...
+                        </Button>
+                      </Box>
+                    )}
+                  </Draggable>
+                );
+              })}
+              {provided.placeholder}
+            </Box>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </>
   );
 };
 
