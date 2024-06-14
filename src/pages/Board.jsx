@@ -51,11 +51,16 @@ const Board = () => {
   const [newColumnName, setNewColumnName] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [sourceColumnId, setSourceColumnId] = useState(null);
 
-  const onDragStart = () => setIsDragging(true);
+  const onDragStart = (start) => {
+    setIsDragging(true);
+    setSourceColumnId(start.source.droppableId);
+  };
 
   const onDragEnd = (result) => {
     setIsDragging(false);
+    setSourceColumnId(null);
     if (!result.destination) return;
 
     const { source, destination, type } = result;
@@ -190,11 +195,15 @@ const Board = () => {
                       <Box
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        bg="gray.100"
+                        bg={isDragging && sourceColumnId !== columnId ? "gray.600" : "gray.100"}
                         p={4}
                         borderRadius="md"
                         width="24%"
                         mr={4}
+                        style={{
+                          backgroundColor: isDragging && sourceColumnId !== columnId ? "gray.600" : "gray.100",
+                          transition: "background-color 0.2s ease",
+                        }}
                       >
                         <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
                           <Text fontSize="xl" {...provided.dragHandleProps} onClick={() => handleColumnEdit(columnId)}>
