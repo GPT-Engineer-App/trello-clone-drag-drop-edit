@@ -30,6 +30,13 @@ const initialColumns = {
       { id: "7", content: "As a user I want to be able to send a message" },
       { id: "8", content: "As an administrator I want to be able to login, create new account, delete account or merge few accounts together." },
     ],
+  },
+  completed: {
+    name: "Completed",
+    items: [
+      { id: "9", content: "As a user I want to be able to view my completed tasks." },
+      { id: "10", content: "As an administrator I want to be able to archive completed tasks." },
+    ],
   }
 };
 
