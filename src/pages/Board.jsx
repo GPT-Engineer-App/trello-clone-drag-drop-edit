@@ -51,11 +51,16 @@ const Board = () => {
   const [newColumnName, setNewColumnName] = useState("");
   const [showConfetti, setShowConfetti] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [draggedOverColumn, setDraggedOverColumn] = useState(null);
 
-  const onDragStart = () => setIsDragging(true);
+  const onDragStart = (start) => {
+    setIsDragging(true);
+    setDraggedOverColumn(start.source.droppableId);
+  };
 
   const onDragEnd = (result) => {
     setIsDragging(false);
+    setDraggedOverColumn(null);
     if (!result.destination) return;
 
     const { source, destination, type } = result;
@@ -103,6 +108,12 @@ const Board = () => {
           items: copiedItems,
         },
       });
+    }
+  };
+
+  const onDragUpdate = (update) => {
+    if (update.destination) {
+      setDraggedOverColumn(update.destination.droppableId);
     }
   };
 
@@ -178,7 +189,7 @@ const Board = () => {
   return (
     <>
       {showConfetti && <Confetti />}
-      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+      <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart} onDragUpdate={onDragUpdate}>
         <Droppable droppableId="all-columns" direction="horizontal" type="COLUMN">
           {(provided) => (
             <Box display="flex" {...provided.droppableProps} ref={provided.innerRef} p={4}>
@@ -190,11 +201,12 @@ const Board = () => {
                       <Box
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        bg="gray.100"
+                        bg={draggedOverColumn === columnId ? "gray.300" : "gray.100"}
                         p={4}
                         borderRadius="md"
                         width="24%"
                         mr={4}
+                        opacity={isDragging && draggedOverColumn !== columnId ? 0.5 : 1}
                       >
                         <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
                           <Text fontSize="xl" {...provided.dragHandleProps} onClick={() => handleColumnEdit(columnId)}>
