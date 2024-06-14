@@ -134,7 +134,7 @@ const Board = () => {
   const handleAddTicket = (columnId) => {
     const newTicket = { id: Date.now().toString(), content: "New Ticket" };
     const column = columns[columnId];
-    const updatedItems = [...column.items, newTicket];
+    const updatedItems = [newTicket, ...column.items]; // Add new ticket at the top
     setColumns({
       ...columns,
       [columnId]: {
