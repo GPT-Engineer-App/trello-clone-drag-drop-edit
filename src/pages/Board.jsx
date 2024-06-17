@@ -57,6 +57,10 @@ const Board = () => {
   const onDragStart = (start) => {
     setIsDragging(true);
     setSourceColumnId(start.source.droppableId);
+    const draggedElement = document.querySelector(`[data-rbd-drag-handle-draggable-id="${start.draggableId}"]`);
+    if (draggedElement) {
+      draggedElement.classList.add("dragging");
+    }
   };
 
   const onDragEnd = (result) => {
@@ -64,6 +68,11 @@ const Board = () => {
     setSourceColumnId(null);
     setHoveredColumnId(null);
     if (!result.destination) return;
+
+    const draggedElement = document.querySelector(`[data-rbd-drag-handle-draggable-id="${result.draggableId}"]`);
+    if (draggedElement) {
+      draggedElement.classList.remove("dragging");
+    }
 
     const { source, destination, type } = result;
 
@@ -297,6 +306,11 @@ const Board = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <style jsx global>{`
+        .dragging {
+          transform: rotate(15deg);
+        }
+      `}</style>
     </>
   );
 };
