@@ -54,15 +54,17 @@ const Board = () => {
   const [sourceColumnId, setSourceColumnId] = useState(null);
   const [hoveredColumnId, setHoveredColumnId] = useState(null);
 
-  const onDragStart = (start) => {
+  const onDragStart = (start, provided) => {
     setIsDragging(true);
     setSourceColumnId(start.source.droppableId);
+    provided.draggableProps.style.transform = "rotate(15deg)";
   };
 
-  const onDragEnd = (result) => {
+  const onDragEnd = (result, provided) => {
     setIsDragging(false);
     setSourceColumnId(null);
     setHoveredColumnId(null);
+    provided.draggableProps.style.transform = "rotate(0deg)";
     if (!result.destination) return;
 
     const { source, destination, type } = result;
@@ -242,6 +244,7 @@ const Board = () => {
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
+                                      className={snapshot.isDragging ? "rotated" : ""}
                                       bg="white"
                                       p={4}
                                       borderRadius="md"
