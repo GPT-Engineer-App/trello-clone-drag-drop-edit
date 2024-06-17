@@ -57,6 +57,7 @@ const Board = () => {
   const onDragStart = (start) => {
     setIsDragging(true);
     setSourceColumnId(start.source.droppableId);
+    document.querySelector(`[data-rbd-draggable-id="${start.draggableId}"]`).classList.add('dragging');
   };
 
   const onDragEnd = (result) => {
@@ -111,6 +112,8 @@ const Board = () => {
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 3000);
     }
+
+    document.querySelector(`[data-rbd-draggable-id="${result.draggableId}"]`).classList.remove('dragging');
   };
 
   const onDragUpdate = (update) => {
