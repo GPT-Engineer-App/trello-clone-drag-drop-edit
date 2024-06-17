@@ -57,6 +57,13 @@ const Board = () => {
   const onDragStart = (start) => {
     setIsDragging(true);
     setSourceColumnId(start.source.droppableId);
+
+    const draggedElement = document.querySelector(`[data-rbd-drag-handle-draggable-id="${start.draggableId}"]`);
+    if (draggedElement) {
+      draggedElement.style.transform = "rotate(15deg)";
+      draggedElement.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.2)";
+      draggedElement.style.border = "2px solid #3182ce";
+    }
   };
 
   const onDragEnd = (result) => {
@@ -111,6 +118,14 @@ const Board = () => {
           items: copiedItems,
         },
       });
+    }
+
+    // Reset rotation and other styles
+    const draggedElement = document.querySelector(`[data-rbd-drag-handle-draggable-id="${result.draggableId}"]`);
+    if (draggedElement) {
+      draggedElement.style.transform = "rotate(0deg)";
+      draggedElement.style.boxShadow = "none";
+      draggedElement.style.border = "none";
     }
   };
 
