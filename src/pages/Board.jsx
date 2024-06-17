@@ -259,6 +259,7 @@ const Board = () => {
                                         transform: snapshot.isDragging ? "rotate(15deg)" : "rotate(0deg)",
                                         boxShadow: snapshot.isDragging ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
                                         border: snapshot.isDragging ? "2px solid #3182ce" : "none",
+                                        transition: "transform 0.2s ease", // Add smooth transition
                                       }}
                                     >
                                       {editingCard && editingCard.columnId === columnId && editingCard.itemId === item.id ? (
