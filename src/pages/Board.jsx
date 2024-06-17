@@ -294,6 +294,17 @@ const Board = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <style jsx>{`
+        .rotated {
+          transition: transform 0.2s ease;
+        }
+
+        .rotated.dragging {
+          transform: rotate(15deg);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          border: 2px solid #3182ce;
+        }
+      `}</style>
     </>
   );
 };
