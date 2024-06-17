@@ -258,6 +258,7 @@ const Board = () => {
                                         ...provided.draggableProps.style,
                                         boxShadow: snapshot.isDragging ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
                                         border: snapshot.isDragging ? "2px solid #3182ce" : "none",
+                                        transform: snapshot.isDragging ? "rotate(15deg)" : "none",
                                       }}
                                     >
                                       {editingCard && editingCard.columnId === columnId && editingCard.itemId === item.id ? (
