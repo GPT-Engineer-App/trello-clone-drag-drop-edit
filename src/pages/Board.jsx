@@ -57,14 +57,12 @@ const Board = () => {
   const onDragStart = (start) => {
     setIsDragging(true);
     setSourceColumnId(start.source.droppableId);
-    document.querySelector(`[data-rbd-draggable-id="${start.draggableId}"]`).classList.add('dragging');
   };
 
   const onDragEnd = (result) => {
     setIsDragging(false);
     setSourceColumnId(null);
     setHoveredColumnId(null);
-
     if (!result.destination) return;
 
     const { source, destination, type } = result;
@@ -77,12 +75,11 @@ const Board = () => {
       return;
     }
 
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
-    const sourceItems = [...sourceColumn.items];
-    const destItems = [...destColumn.items];
-
     if (source.droppableId !== destination.droppableId) {
+      const sourceColumn = columns[source.droppableId];
+      const destColumn = columns[destination.droppableId];
+      const sourceItems = [...sourceColumn.items];
+      const destItems = [...destColumn.items];
       const [removed] = sourceItems.splice(source.index, 1);
       destItems.splice(destination.index, 0, removed);
       setColumns({
@@ -96,24 +93,24 @@ const Board = () => {
           items: destItems,
         },
       });
+
+      if (destination.droppableId === "completed") {
+        setShowConfetti(true);
+        setTimeout(() => setShowConfetti(false), 3000);
+      }
     } else {
-      const [removed] = sourceItems.splice(source.index, 1);
-      sourceItems.splice(destination.index, 0, removed);
+      const column = columns[source.droppableId];
+      const copiedItems = [...column.items];
+      const [removed] = copiedItems.splice(source.index, 1);
+      copiedItems.splice(destination.index, 0, removed);
       setColumns({
         ...columns,
         [source.droppableId]: {
-          ...sourceColumn,
-          items: sourceItems,
+          ...column,
+          items: copiedItems,
         },
       });
     }
-
-    if (destination.droppableId === "completed") {
-      setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000);
-    }
-
-    document.querySelector(`[data-rbd-draggable-id="${result.draggableId}"]`).classList.remove('dragging');
   };
 
   const onDragUpdate = (update) => {
@@ -245,7 +242,6 @@ const Board = () => {
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
-                                      className={`rotated ${snapshot.isDragging ? "dragging" : ""}`}
                                       bg="white"
                                       p={4}
                                       borderRadius="md"
@@ -256,8 +252,12 @@ const Board = () => {
                                           handleEdit(columnId, item.id);
                                         }
                                       }}
+                                      onDragStart={onDragStart}
+                                      onDragEnd={onDragEnd}
                                       style={{
                                         ...provided.draggableProps.style,
+                                        boxShadow: snapshot.isDragging ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "none",
+                                        border: snapshot.isDragging ? "2px solid #3182ce" : "none",
                                       }}
                                     >
                                       {editingCard && editingCard.columnId === columnId && editingCard.itemId === item.id ? (
@@ -297,17 +297,6 @@ const Board = () => {
           )}
         </Droppable>
       </DragDropContext>
-      <style jsx>{`
-        .rotated {
-          transition: transform 0.2s ease;
-        }
-
-        .rotated.dragging {
-          transform: rotate(15deg);
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-          border: 2px solid #3182ce;
-        }
-      `}</style>
     </>
   );
 };
