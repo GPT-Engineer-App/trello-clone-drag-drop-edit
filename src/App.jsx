@@ -2,6 +2,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Index from "./pages/Index.jsx";
 import Board from "./pages/Board.jsx";
 import Navbar from "./components/Navbar.jsx";
+import Pricing from "./pages/Pricing.jsx";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Index />} />
         <Route exact path="/board" element={<Board />} />
+        <Route exact path="/pricing" element={<Pricing />} />
       </Routes>
     </Router>
   );

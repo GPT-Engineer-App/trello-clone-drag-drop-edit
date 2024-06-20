@@ -23,6 +23,9 @@ const Navbar = () => {
           <NavLink to="/" style={{ marginRight: "1rem", color: "white" }}>
             Home
           </NavLink>
+          <NavLink to="/pricing" style={{ marginRight: "1rem", color: "white" }}>
+            Pricing
+          </NavLink>
           <NavLink to="/board" style={{ color: "white" }}>
             Board
           </NavLink>
@@ -35,6 +38,9 @@ const Navbar = () => {
           <DrawerBody>
             <NavLink to="/" onClick={onClose} style={{ display: "block", marginBottom: "1rem" }}>
               Home
+            </NavLink>
+            <NavLink to="/pricing" onClick={onClose} style={{ display: "block", marginBottom: "1rem" }}>
+              Pricing
             </NavLink>
             <NavLink to="/board" onClick={onClose} style={{ display: "block" }}>
               Board
