@@ -42,7 +42,12 @@ const Navbar = () => {
               placeholder="Search"
               value={searchQuery}
               onChange={handleSearchChange}
-              bg="rgba(255, 255, 255, 0.5)" // Update this line to set the background color with 50% opacity
+              bg="rgba(255, 255, 255, 0.5)"
+              border="none"
+              outline="none"
+              boxShadow="none"
+              _focus={{ border: "2px solid #3182ce" }}
+              _hover={{ border: "1px solid #3182ce" }}
             />
             <InputRightElement width="2.5rem">
               <IconButton
