@@ -55,9 +55,10 @@ const Board = () => {
   const [sourceColumnId, setSourceColumnId] = useState(null);
   const [hoveredColumnId, setHoveredColumnId] = useState(null);
   const [filteredColumns, setFilteredColumns] = useState(columns);
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    const query = new URLSearchParams(window.location.search).get("search") || "";
+    const query = searchParams.get("search") || "";
     if (query) {
       const newFilteredColumns = {};
       Object.keys(columns).forEach((columnId) => {
@@ -72,7 +73,7 @@ const Board = () => {
     } else {
       setFilteredColumns(columns);
     }
-  }, [columns]);
+  }, [columns, searchParams]);
 
   const onDragStart = (start) => {
     setIsDragging(true);
