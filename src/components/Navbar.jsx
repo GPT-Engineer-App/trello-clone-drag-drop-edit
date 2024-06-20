@@ -1,18 +1,23 @@
 import { Box, Flex, IconButton, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, useDisclosure, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchQuery, setSearchQuery] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
+    const query = event.target.value;
+    setSearchQuery(query);
+    navigate(`/board?search=${query}`);
   };
 
   const clearSearch = () => {
     setSearchQuery("");
+    navigate(`/board?search=`);
   };
 
   return (
