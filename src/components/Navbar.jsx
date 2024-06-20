@@ -42,7 +42,7 @@ const Navbar = () => {
               placeholder="Search"
               value={searchQuery}
               onChange={handleSearchChange}
-              bg="rgba(255, 255, 255, 0.8)" // Add this line to set the background color with 80% opacity
+              bg="rgba(255, 255, 255, 0.5)" // Update this line to set the background color with 50% opacity
             />
             <InputRightElement width="2.5rem">
               <IconButton
