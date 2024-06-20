@@ -1,9 +1,19 @@
-import { Box, Flex, IconButton, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, useDisclosure } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { Box, Flex, IconButton, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, useDisclosure, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const clearSearch = () => {
+    setSearchQuery("");
+  };
 
   return (
     <Box bg="blue.500" px={4} py={2}>
@@ -20,6 +30,24 @@ const Navbar = () => {
           Task Buddy
         </Box>
         <Flex alignItems="center">
+          <InputGroup size="md" width="200px" mr={4}>
+            <Input
+              pr="2.5rem"
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+            <InputRightElement width="2.5rem">
+              <IconButton
+                h="1.75rem"
+                size="sm"
+                icon={<CloseIcon />}
+                onClick={clearSearch}
+                aria-label="Clear search"
+              />
+            </InputRightElement>
+          </InputGroup>
           <NavLink to="/" style={{ marginRight: "1rem", color: "white" }}>
             Home
           </NavLink>

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Input, Text, VStack } from "@chakra-ui/react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import Confetti from "react-confetti";
 import { FaPlus } from "react-icons/fa";
+import { useSearchParams } from "react-router-dom";
 
 const initialColumns = {
   backlog: {
@@ -53,6 +54,25 @@ const Board = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [sourceColumnId, setSourceColumnId] = useState(null);
   const [hoveredColumnId, setHoveredColumnId] = useState(null);
+  const [filteredColumns, setFilteredColumns] = useState(columns);
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search).get("search") || "";
+    if (query) {
+      const newFilteredColumns = {};
+      Object.keys(columns).forEach((columnId) => {
+        newFilteredColumns[columnId] = {
+          ...columns[columnId],
+          items: columns[columnId].items.filter((item) =>
+            item.content.toLowerCase().includes(query.toLowerCase())
+          ),
+        };
+      });
+      setFilteredColumns(newFilteredColumns);
+    } else {
+      setFilteredColumns(columns);
+    }
+  }, [columns]);
 
   const onDragStart = (start) => {
     setIsDragging(true);
@@ -198,7 +218,7 @@ const Board = () => {
           {(provided) => (
             <Box display="flex" {...provided.droppableProps} ref={provided.innerRef} p={4}>
               {columnOrder.map((columnId, index) => {
-                const column = columns[columnId];
+                const column = filteredColumns[columnId];
                 return (
                   <Draggable key={columnId} draggableId={columnId} index={index}>
                     {(provided) => (
