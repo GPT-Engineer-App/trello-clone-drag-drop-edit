@@ -55,6 +55,8 @@ const Board = () => {
   const [sourceColumnId, setSourceColumnId] = useState(null);
   const [hoveredColumnId, setHoveredColumnId] = useState(null);
   const [filteredColumns, setFilteredColumns] = useState(columns);
+  const [dimmedColumnId, setDimmedColumnId] = useState(null);
+  const [highlightedColumnId, setHighlightedColumnId] = useState(null);
   const [searchParams] = useSearchParams();
   const { colorMode } = useColorMode();
 
@@ -79,12 +81,15 @@ const Board = () => {
   const onDragStart = (start) => {
     setIsDragging(true);
     setSourceColumnId(start.source.droppableId);
+    setDimmedColumnId(start.source.droppableId);
   };
 
   const onDragEnd = (result) => {
     setIsDragging(false);
     setSourceColumnId(null);
     setHoveredColumnId(null);
+    setDimmedColumnId(null);
+    setHighlightedColumnId(null);
     if (!result.destination) return;
 
     const { source, destination, type } = result;
@@ -138,8 +143,10 @@ const Board = () => {
   const onDragUpdate = (update) => {
     if (update.destination) {
       setHoveredColumnId(update.destination.droppableId);
+      setHighlightedColumnId(update.destination.droppableId);
     } else {
       setHoveredColumnId(null);
+      setHighlightedColumnId(null);
     }
   };
 
@@ -232,6 +239,8 @@ const Board = () => {
                         borderRadius="md"
                         width="24%"
                         mr={4}
+                        opacity={dimmedColumnId === columnId ? 0.5 : 1}
+                        boxShadow={highlightedColumnId === columnId ? "0 0 10px rgba(66, 153, 225, 0.6)" : "none"}
                       >
                         <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
                           <Text
