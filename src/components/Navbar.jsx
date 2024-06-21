@@ -58,9 +58,9 @@ const Navbar = () => {
                   icon={<CloseIcon boxSize={2} />}
                   onClick={clearSearch}
                   aria-label="Clear search"
-                  color="gray.500"
+                  color="gray.700"
                   bg="transparent"
-                  _hover={{ color: "gray.700" }}
+                  _hover={{ color: "gray.900" }}
                 />
               </InputRightElement>
             )}
