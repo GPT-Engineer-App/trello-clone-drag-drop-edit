@@ -1,11 +1,12 @@
-import { Box, Flex, IconButton, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, useDisclosure, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { Box, Flex, IconButton, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, useDisclosure, Input, InputGroup, InputRightElement, useColorMode, Button } from "@chakra-ui/react";
+import { HamburgerIcon, CloseIcon, SunIcon, MoonIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchQuery, setSearchQuery] = useState("");
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ const Navbar = () => {
   };
 
   return (
-    <Box bg="blue.500" px={4} py={2}>
+    <Box bg={colorMode === "light" ? "blue.500" : "gray.900"} px={4} py={2}>
       <Flex h={16} alignItems="center" justifyContent="space-between">
         <IconButton
           icon={<HamburgerIcon />}
@@ -43,7 +44,7 @@ const Navbar = () => {
               value={searchQuery}
               onChange={handleSearchChange}
               bg="rgba(255, 255, 255, 0.5)"
-              border="2px solid #3182ce" // Always show border
+              border="2px solid #3182ce"
               outline="none"
               boxShadow="none"
               _focus={{ border: "2px solid #3182ce" }}
@@ -52,14 +53,14 @@ const Navbar = () => {
             {searchQuery && (
               <InputRightElement width="2.5rem">
                 <IconButton
-                  h="1.25rem" // Decrease height
-                  size="xs" // Change size to extra small
-                  icon={<CloseIcon boxSize={2} />} // Decrease icon size
+                  h="1.25rem"
+                  size="xs"
+                  icon={<CloseIcon boxSize={2} />}
                   onClick={clearSearch}
                   aria-label="Clear search"
-                  color="gray.500" // Change color to a less prominent one
-                  bg="transparent" // Make background transparent
-                  _hover={{ color: "gray.700" }} // Slightly darker color on hover
+                  color="gray.500"
+                  bg="transparent"
+                  _hover={{ color: "gray.700" }}
                 />
               </InputRightElement>
             )}
@@ -73,6 +74,9 @@ const Navbar = () => {
           <NavLink to="/board" style={{ color: "white" }}>
             Board
           </NavLink>
+          <Button onClick={toggleColorMode} ml={4}>
+            {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+          </Button>
         </Flex>
       </Flex>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>

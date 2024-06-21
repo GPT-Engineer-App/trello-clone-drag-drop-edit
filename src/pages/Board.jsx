@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Button, Input, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Input, Text, VStack, useColorMode } from "@chakra-ui/react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import Confetti from "react-confetti";
 import { FaPlus } from "react-icons/fa";
@@ -56,6 +56,7 @@ const Board = () => {
   const [hoveredColumnId, setHoveredColumnId] = useState(null);
   const [filteredColumns, setFilteredColumns] = useState(columns);
   const [searchParams] = useSearchParams();
+  const { colorMode } = useColorMode();
 
   useEffect(() => {
     const query = searchParams.get("search") || "";
@@ -212,7 +213,7 @@ const Board = () => {
   };
 
   return (
-    <>
+    <Box bg={colorMode === "light" ? "white" : "gray.800"} color={colorMode === "light" ? "black" : "white"}>
       {showConfetti && <Confetti />}
       <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart} onDragUpdate={onDragUpdate}>
         <Droppable droppableId="all-columns" direction="horizontal" type="COLUMN">
@@ -318,7 +319,7 @@ const Board = () => {
           )}
         </Droppable>
       </DragDropContext>
-    </>
+    </Box>
   );
 };
 
