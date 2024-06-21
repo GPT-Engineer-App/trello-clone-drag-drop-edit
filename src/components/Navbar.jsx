@@ -51,11 +51,14 @@ const Navbar = () => {
             />
             <InputRightElement width="2.5rem">
               <IconButton
-                h="1.75rem"
-                size="sm"
-                icon={<CloseIcon />}
+                h="1.25rem" // Decrease height
+                size="xs" // Change size to extra small
+                icon={<CloseIcon boxSize={2} />} // Decrease icon size
                 onClick={clearSearch}
                 aria-label="Clear search"
+                color="gray.500" // Change color to a less prominent one
+                bg="transparent" // Make background transparent
+                _hover={{ color: "gray.700" }} // Slightly darker color on hover
               />
             </InputRightElement>
           </InputGroup>
