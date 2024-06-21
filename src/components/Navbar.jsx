@@ -48,7 +48,7 @@ const Navbar = () => {
               <IconButton
                 h="1.75rem"
                 size="sm"
-                icon={<CloseIcon />}
+                icon={<CloseIcon color="black" />} // Set the color to black to make it more prominent
                 onClick={clearSearch}
                 aria-label="Clear search"
               />
