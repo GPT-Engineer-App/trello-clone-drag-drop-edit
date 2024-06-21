@@ -264,7 +264,8 @@ const Board = () => {
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
-                                      bg="white"
+                                      bg={colorMode === "light" ? "white" : "gray.700"}
+                                      color={colorMode === "light" ? "black" : "white"}
                                       p={4}
                                       borderRadius="md"
                                       width="100%"
@@ -288,6 +289,8 @@ const Board = () => {
                                             value={newContent}
                                             onChange={(e) => setNewContent(e.target.value)}
                                             mb={2}
+                                            bg={colorMode === "light" ? "white" : "gray.600"}
+                                            color={colorMode === "light" ? "black" : "white"}
                                           />
                                           <Button className="save-button" onClick={(e) => { e.stopPropagation(); handleSave(); }} colorScheme="blue" mr={2}>
                                             Save
