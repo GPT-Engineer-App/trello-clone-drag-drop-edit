@@ -261,7 +261,12 @@ const Board = () => {
                               column.name
                             )}
                           </Text>
-                          <Button size="sm" onClick={() => handleAddTicket(columnId)} leftIcon={<FaPlus style={{ fontWeight: 'lighter', margin: '0 auto' }} />} />
+                          <Button
+                            size="sm"
+                            onClick={() => handleAddTicket(columnId)}
+                            leftIcon={<FaPlus style={{ fontWeight: 'lighter', margin: '0 auto' }} />}
+                            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                          />
                         </Box>
                         <Droppable droppableId={columnId} type="TASK">
                           {(provided) => (
