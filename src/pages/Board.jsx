@@ -227,14 +227,19 @@ const Board = () => {
                       <Box
                         ref={provided.innerRef}
                         {...provided.draggableProps}
-                        bg={columnId === sourceColumnId ? "gray.300" : columnId === hoveredColumnId ? "gray.500" : "gray.100"}
+                        bg={colorMode === "light" ? "gray.100" : "gray.600"}
                         p={4}
                         borderRadius="md"
                         width="24%"
                         mr={4}
                       >
                         <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-                          <Text fontSize="xl" {...provided.dragHandleProps} onClick={() => handleColumnEdit(columnId)}>
+                          <Text
+                            fontSize="xl"
+                            {...provided.dragHandleProps}
+                            onClick={() => handleColumnEdit(columnId)}
+                            color={colorMode === "light" ? "black" : "gray.700"}
+                          >
                             {editingColumn === columnId ? (
                               <Input
                                 value={newColumnName}
