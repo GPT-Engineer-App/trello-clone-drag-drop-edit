@@ -71,6 +71,9 @@ const Navbar = () => {
           <NavLink to="/pricing" style={{ marginRight: "1rem", color: "white" }}>
             Pricing
           </NavLink>
+          <NavLink to="/about" style={{ marginRight: "1rem", color: "white" }}>
+            About
+          </NavLink>
           <NavLink to="/board" style={{ color: "white" }}>
             Board
           </NavLink>
@@ -89,6 +92,9 @@ const Navbar = () => {
             </NavLink>
             <NavLink to="/pricing" onClick={onClose} style={{ display: "block", marginBottom: "1rem" }}>
               Pricing
+            </NavLink>
+            <NavLink to="/about" onClick={onClose} style={{ display: "block", marginBottom: "1rem" }}>
+              About
             </NavLink>
             <NavLink to="/board" onClick={onClose} style={{ display: "block" }}>
               Board
