@@ -43,24 +43,26 @@ const Navbar = () => {
               value={searchQuery}
               onChange={handleSearchChange}
               bg="rgba(255, 255, 255, 0.5)"
-              border="none"
+              border="2px solid #3182ce" // Always show border
               outline="none"
               boxShadow="none"
               _focus={{ border: "2px solid #3182ce" }}
-              _hover={{ border: "1px solid #3182ce" }}
+              _hover={{ border: "2px solid #3182ce" }}
             />
-            <InputRightElement width="2.5rem">
-              <IconButton
-                h="1.25rem" // Decrease height
-                size="xs" // Change size to extra small
-                icon={<CloseIcon boxSize={2} />} // Decrease icon size
-                onClick={clearSearch}
-                aria-label="Clear search"
-                color="gray.500" // Change color to a less prominent one
-                bg="transparent" // Make background transparent
-                _hover={{ color: "gray.700" }} // Slightly darker color on hover
-              />
-            </InputRightElement>
+            {searchQuery && (
+              <InputRightElement width="2.5rem">
+                <IconButton
+                  h="1.25rem" // Decrease height
+                  size="xs" // Change size to extra small
+                  icon={<CloseIcon boxSize={2} />} // Decrease icon size
+                  onClick={clearSearch}
+                  aria-label="Clear search"
+                  color="gray.500" // Change color to a less prominent one
+                  bg="transparent" // Make background transparent
+                  _hover={{ color: "gray.700" }} // Slightly darker color on hover
+                />
+              </InputRightElement>
+            )}
           </InputGroup>
           <NavLink to="/" style={{ marginRight: "1rem", color: "white" }}>
             Home
