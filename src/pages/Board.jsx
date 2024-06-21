@@ -238,7 +238,7 @@ const Board = () => {
                             fontSize="xl"
                             {...provided.dragHandleProps}
                             onClick={() => handleColumnEdit(columnId)}
-                            color={colorMode === "light" ? "black" : "gray.700"}
+                            color={colorMode === "light" ? "blue.500" : "blue.300"}
                           >
                             {editingColumn === columnId ? (
                               <Input
