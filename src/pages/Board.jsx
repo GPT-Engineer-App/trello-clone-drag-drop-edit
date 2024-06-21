@@ -264,7 +264,7 @@ const Board = () => {
                           <Button
                             size="sm"
                             onClick={() => handleAddTicket(columnId)}
-                            leftIcon={<FaPlus style={{ fontWeight: 'lighter', margin: '0 auto' }} />}
+                            leftIcon={<FaPlus style={{ fontWeight: 'lighter', margin: '0 auto', marginLeft: '4px' }} />} // Added marginLeft here
                             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                           />
                         </Box>
