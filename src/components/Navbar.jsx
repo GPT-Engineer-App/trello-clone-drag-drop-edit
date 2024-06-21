@@ -1,13 +1,14 @@
 import { Box, Flex, IconButton, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, useDisclosure, Input, InputGroup, InputRightElement, useColorMode, Button } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, SunIcon, MoonIcon } from "@chakra-ui/icons";
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom"; // Added useLocation
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchQuery, setSearchQuery] = useState("");
   const { colorMode, toggleColorMode } = useColorMode();
 
+  const location = useLocation(); // Get current location
   const navigate = useNavigate();
 
   const handleSearchChange = (event) => {
@@ -36,35 +37,37 @@ const Navbar = () => {
           Task Buddy
         </Box>
         <Flex alignItems="center">
-          <InputGroup size="md" width="200px" mr={4}>
-            <Input
-              pr="2.5rem"
-              type="text"
-              placeholder="Search"
-              value={searchQuery}
-              onChange={handleSearchChange}
-              bg="rgba(255, 255, 255, 0.5)"
-              border="2px solid #3182ce"
-              outline="none"
-              boxShadow="none"
-              _focus={{ border: "2px solid #3182ce" }}
-              _hover={{ border: "2px solid #3182ce" }}
-            />
-            {searchQuery && (
-              <InputRightElement width="2.5rem">
-                <IconButton
-                  h="1.25rem"
-                  size="xs"
-                  icon={<CloseIcon boxSize={2} />}
-                  onClick={clearSearch}
-                  aria-label="Clear search"
-                  color="gray.700"
-                  bg="transparent"
-                  _hover={{ color: "gray.900" }}
-                />
-              </InputRightElement>
-            )}
-          </InputGroup>
+          {location.pathname === "/board" && ( // Conditionally render search box
+            <InputGroup size="md" width="200px" mr={4}>
+              <Input
+                pr="2.5rem"
+                type="text"
+                placeholder="Search"
+                value={searchQuery}
+                onChange={handleSearchChange}
+                bg="rgba(255, 255, 255, 0.5)"
+                border="2px solid #3182ce"
+                outline="none"
+                boxShadow="none"
+                _focus={{ border: "2px solid #3182ce" }}
+                _hover={{ border: "2px solid #3182ce" }}
+              />
+              {searchQuery && (
+                <InputRightElement width="2.5rem">
+                  <IconButton
+                    h="1.25rem"
+                    size="xs"
+                    icon={<CloseIcon boxSize={2} />}
+                    onClick={clearSearch}
+                    aria-label="Clear search"
+                    color="gray.700"
+                    bg="transparent"
+                    _hover={{ color: "gray.900" }}
+                  />
+                </InputRightElement>
+              )}
+            </InputGroup>
+          )}
           <NavLink to="/" style={{ marginRight: "1rem", color: "white" }}>
             Home
           </NavLink>
