@@ -46,11 +46,12 @@ const Navbar = () => {
                 value={searchQuery}
                 onChange={handleSearchChange}
                 bg="rgba(255, 255, 255, 0.5)"
-                border="2px solid #3182ce"
+                border="2px solid"
+                borderColor={colorMode === "light" ? "#3182ce" : "gray.500"}
                 outline="none"
                 boxShadow="none"
-                _focus={{ border: "2px solid #3182ce" }}
-                _hover={{ border: "2px solid #3182ce" }}
+                _focus={{ border: "2px solid", borderColor: colorMode === "light" ? "#3182ce" : "gray.500" }}
+                _hover={{ border: "2px solid", borderColor: colorMode === "light" ? "#3182ce" : "gray.500" }}
               />
               {searchQuery && (
                 <InputRightElement width="2.5rem">
