@@ -239,8 +239,8 @@ const Board = () => {
                         borderRadius="md"
                         width="24%"
                         mr={4}
-                        opacity={dimmedColumnId === columnId ? 0.5 : 1}
-                        boxShadow={highlightedColumnId === columnId ? "0 0 10px rgba(66, 153, 225, 0.6)" : "none"}
+                        opacity={dimmedColumnId === columnId ? 0.8 : 1} // Change opacity to 0.8 for subtle effect
+                        backgroundColor={highlightedColumnId === columnId ? (colorMode === "light" ? "gray.300" : "gray.500") : (colorMode === "light" ? "gray.100" : "gray.600")} // Adjust background color for target columns
                       >
                         <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
                           <Text
