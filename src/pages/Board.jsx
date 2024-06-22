@@ -264,7 +264,7 @@ const Board = () => {
                           <Button
                             size="sm"
                             onClick={() => handleAddTicket(columnId)}
-                            leftIcon={<FaPlus style={{ fontWeight: 'lighter', margin: '0 auto', marginLeft: '6px' }} />} // Adjusted marginLeft to 6px
+                            leftIcon={<FaPlus style={{ fontWeight: 'lighter', margin: '0 auto', marginLeft: '6px', color: colorMode === "light" ? "#A0AEC0" : "#718096" }} />} // Adjusted marginLeft to 6px and color based on color mode
                             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                           />
                         </Box>
