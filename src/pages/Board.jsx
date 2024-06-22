@@ -264,8 +264,8 @@ const Board = () => {
                           <Button
                             size="sm"
                             onClick={() => handleAddTicket(columnId)}
-                            leftIcon={<FaPlus style={{ fontWeight: 'lighter', margin: '0 auto', marginLeft: '6px', color: colorMode === "light" ? "#A0AEC0" : "#718096" }} />} // Adjusted marginLeft to 6px and color based on color mode
-                            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                            leftIcon={<FaPlus style={{ fontWeight: 'lighter', margin: '0 auto', marginLeft: '6px', color: colorMode === "light" ? "#A0AEC0" : "#718096" }} />}
+                            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'none', border: 'none', boxShadow: 'none' }} // Removed background and border
                           />
                         </Box>
                         <Droppable droppableId={columnId} type="TASK">
