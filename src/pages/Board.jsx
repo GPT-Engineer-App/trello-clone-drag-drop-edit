@@ -267,7 +267,7 @@ const Board = () => {
                               onClick={() => handleAddTicket(columnId)}
                               leftIcon={<FaPlus style={{ fontWeight: 'lighter', margin: '0 auto', marginLeft: '6px', color: colorMode === "light" ? "#A0AEC0" : "#718096" }} />}
                               style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'none', border: 'none', boxShadow: 'none' }}
-                              _hover={{ color: colorMode === "light" ? "#2D3748" : "#E2E8F0" }} // Change color on hover
+                              _hover={{ color: colorMode === "light" ? "#2D3748" : "#E2E8F0", transform: 'scale(1.1)' }} // Change color and add scale transformation on hover
                             />
                           </Tooltip>
                         </Box>
