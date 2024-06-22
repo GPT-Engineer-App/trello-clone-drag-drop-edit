@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Button, Input, Text, VStack, useColorMode } from "@chakra-ui/react";
+import { Box, Button, Input, Text, VStack, useColorMode, Tooltip } from "@chakra-ui/react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import Confetti from "react-confetti";
 import { FaPlus } from "react-icons/fa";
@@ -261,12 +261,15 @@ const Board = () => {
                               column.name
                             )}
                           </Text>
-                          <Button
-                            size="sm"
-                            onClick={() => handleAddTicket(columnId)}
-                            leftIcon={<FaPlus style={{ fontWeight: 'lighter', margin: '0 auto', marginLeft: '6px', color: colorMode === "light" ? "#A0AEC0" : "#718096" }} />}
-                            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'none', border: 'none', boxShadow: 'none' }} // Removed background and border
-                          />
+                          <Tooltip label="Add new card" aria-label="Add new card tooltip">
+                            <Button
+                              size="sm"
+                              onClick={() => handleAddTicket(columnId)}
+                              leftIcon={<FaPlus style={{ fontWeight: 'lighter', margin: '0 auto', marginLeft: '6px', color: colorMode === "light" ? "#A0AEC0" : "#718096" }} />}
+                              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'none', border: 'none', boxShadow: 'none' }}
+                              _hover={{ color: colorMode === "light" ? "#2D3748" : "#E2E8F0" }} // Change color on hover
+                            />
+                          </Tooltip>
                         </Box>
                         <Droppable droppableId={columnId} type="TASK">
                           {(provided) => (
