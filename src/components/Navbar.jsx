@@ -69,16 +69,16 @@ const Navbar = () => {
               )}
             </InputGroup>
           )}
-          <NavLink to="/" style={{ margin: "5px 0", marginRight: "1rem", color: "white" }}>
+          <NavLink to="/" style={{ margin: "5px 0", marginRight: "1rem", color: "white", padding: "5px 0" }}>
             Home
           </NavLink>
-          <NavLink to="/pricing" style={{ margin: "5px 0", marginRight: "1rem", color: "white" }}>
+          <NavLink to="/pricing" style={{ margin: "5px 0", marginRight: "1rem", color: "white", padding: "5px 0" }}>
             Pricing
           </NavLink>
-          <NavLink to="/about" style={{ margin: "5px 0", marginRight: "1rem", color: "white" }}>
+          <NavLink to="/about" style={{ margin: "5px 0", marginRight: "1rem", color: "white", padding: "5px 0" }}>
             About
           </NavLink>
-          <NavLink to="/board" style={{ margin: "5px 0", color: "white" }}>
+          <NavLink to="/board" style={{ margin: "5px 0", color: "white", padding: "5px 0" }}>
             Board
           </NavLink>
           <Button onClick={toggleColorMode} ml={4}>
