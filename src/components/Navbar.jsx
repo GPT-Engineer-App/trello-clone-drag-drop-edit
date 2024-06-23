@@ -40,7 +40,7 @@ const Navbar = () => {
         </Flex>
         {location.pathname === "/board" && (
           <Flex flex="1" justifyContent="center">
-            <InputGroup size="md" width="200px">
+            <InputGroup size="md" width="400px">
               <Input
                 pr="2.5rem"
                 type="text"
