@@ -25,20 +25,22 @@ const Navbar = () => {
   return (
     <Box bg={colorMode === "light" ? "blue.500" : "gray.900"} px={4} py={1.25}>
       <Flex h={12} alignItems="center" justifyContent="space-between">
-        <IconButton
-          icon={<HamburgerIcon />}
-          variant="outline"
-          color="white"
-          onClick={onOpen}
-          aria-label="Open Menu"
-          mr={2}
-        />
-        <Box color="white" fontWeight="bold" fontSize="xl">
-          Task Buddy
-        </Box>
         <Flex alignItems="center">
-          {location.pathname === "/board" && (
-            <InputGroup size="md" width="200px" mr={4}>
+          <IconButton
+            icon={<HamburgerIcon />}
+            variant="outline"
+            color="white"
+            onClick={onOpen}
+            aria-label="Open Menu"
+            mr={2}
+          />
+          <Box color="white" fontWeight="bold" fontSize="xl">
+            Task Buddy
+          </Box>
+        </Flex>
+        {location.pathname === "/board" && (
+          <Flex flex="1" justifyContent="center">
+            <InputGroup size="md" width="200px">
               <Input
                 pr="2.5rem"
                 type="text"
@@ -68,7 +70,9 @@ const Navbar = () => {
                 </InputRightElement>
               )}
             </InputGroup>
-          )}
+          </Flex>
+        )}
+        <Flex alignItems="center">
           <NavLink to="/" style={{ margin: "5px 0", marginRight: "1rem", color: "white", padding: "5px 0" }}>
             Home
           </NavLink>
