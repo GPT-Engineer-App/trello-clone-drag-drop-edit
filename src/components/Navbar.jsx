@@ -23,8 +23,8 @@ const Navbar = () => {
   };
 
   return (
-    <Box bg={colorMode === "light" ? "blue.500" : "gray.900"} px={4} py={1.7}>
-      <Flex h={11.56} alignItems="center" justifyContent="space-between">
+    <Box bg={colorMode === "light" ? "blue.500" : "gray.900"} px={4} py={1.45}>
+      <Flex h={10} alignItems="center" justifyContent="space-between">
         <IconButton
           icon={<HamburgerIcon />}
           variant="outline"
@@ -37,7 +37,7 @@ const Navbar = () => {
           Task Buddy
         </Box>
         <Flex alignItems="center">
-          {location.pathname === "/board" && ( // Conditionally render search box
+          {location.pathname === "/board" && (
             <InputGroup size="md" width="200px" mr={4}>
               <Input
                 pr="2.5rem"
