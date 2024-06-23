@@ -24,7 +24,7 @@ const Navbar = () => {
 
   return (
     <Box bg={colorMode === "light" ? "blue.500" : "gray.900"} px={4} py={1.7}>
-      <Flex h={13.6} alignItems="center" justifyContent="space-between">
+      <Flex h={11.56} alignItems="center" justifyContent="space-between">
         <IconButton
           icon={<HamburgerIcon />}
           variant="outline"
