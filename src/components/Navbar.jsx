@@ -91,16 +91,16 @@ const Navbar = () => {
         <DrawerContent>
           <DrawerHeader>Menu</DrawerHeader>
           <DrawerBody>
-            <NavLink to="/" onClick={onClose} style={{ display: "block", marginBottom: "1rem" }}>
+            <NavLink to="/" onClick={onClose} style={{ display: "block", marginBottom: "1rem", padding: "5px 0" }}>
               Home
             </NavLink>
-            <NavLink to="/pricing" onClick={onClose} style={{ display: "block", marginBottom: "1rem" }}>
+            <NavLink to="/pricing" onClick={onClose} style={{ display: "block", marginBottom: "1rem", padding: "5px 0" }}>
               Pricing
             </NavLink>
-            <NavLink to="/about" onClick={onClose} style={{ display: "block", marginBottom: "1rem" }}>
+            <NavLink to="/about" onClick={onClose} style={{ display: "block", marginBottom: "1rem", padding: "5px 0" }}>
               About
             </NavLink>
-            <NavLink to="/board" onClick={onClose} style={{ display: "block" }}>
+            <NavLink to="/board" onClick={onClose} style={{ display: "block", padding: "5px 0" }}>
               Board
             </NavLink>
           </DrawerBody>
