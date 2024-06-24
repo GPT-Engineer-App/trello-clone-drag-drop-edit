@@ -237,14 +237,14 @@ const Board = () => {
                         bg={colorMode === "light" ? "gray.100" : "gray.600"}
                         p={4}
                         borderRadius="md"
-                        width="24%"
+                        width="275px"
                         mr={4}
-                        opacity={dimmedColumnId === columnId ? 0.8 : 1} // Change opacity to 0.8 for subtle effect
-                        backgroundColor={highlightedColumnId === columnId ? (colorMode === "light" ? "gray.300" : "gray.500") : (colorMode === "light" ? "gray.100" : "gray.600")} // Adjust background color for target columns
+                        opacity={dimmedColumnId === columnId ? 0.8 : 1}
+                        backgroundColor={highlightedColumnId === columnId ? (colorMode === "light" ? "gray.300" : "gray.500") : (colorMode === "light" ? "gray.100" : "gray.600")}
                       >
                         <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
                           <Text
-                            fontSize="xl"
+                            fontSize="lg"
                             {...provided.dragHandleProps}
                             onClick={() => handleColumnEdit(columnId)}
                             color={colorMode === "light" ? "blue.500" : "blue.300"}
@@ -267,7 +267,7 @@ const Board = () => {
                               onClick={() => handleAddTicket(columnId)}
                               leftIcon={<FaPlus style={{ fontWeight: 'lighter', margin: '0 auto', marginLeft: '6px', color: colorMode === "light" ? "#A0AEC0" : "#718096" }} />}
                               style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'none', border: 'none', boxShadow: 'none' }}
-                              _hover={{ color: colorMode === "light" ? "#2D3748" : "#E2E8F0", transform: 'scale(1.1)' }} // Change color and add scale transformation on hover
+                              _hover={{ color: colorMode === "light" ? "#2D3748" : "#E2E8F0", transform: 'scale(1.1)' }}
                             />
                           </Tooltip>
                         </Box>
@@ -290,7 +290,8 @@ const Board = () => {
                                       color={colorMode === "light" ? "black" : "white"}
                                       p={4}
                                       borderRadius="md"
-                                      width="100%"
+                                      width="255px"
+                                      mx="10px"
                                       boxShadow="md"
                                       onClick={(e) => {
                                         if (!e.target.closest('.save-button') && !e.target.closest('.cancel-button')) {
@@ -313,6 +314,7 @@ const Board = () => {
                                             mb={2}
                                             bg={colorMode === "light" ? "white" : "gray.600"}
                                             color={colorMode === "light" ? "black" : "white"}
+                                            fontSize="sm"
                                           />
                                           <Button className="save-button" onClick={(e) => { e.stopPropagation(); handleSave(); }} colorScheme="blue" mr={2}>
                                             Save
@@ -323,7 +325,7 @@ const Board = () => {
                                         </>
                                       ) : (
                                         <>
-                                          <Text>{item.content}</Text>
+                                          <Text fontSize="sm">{item.content}</Text>
                                         </>
                                       )}
                                     </Box>
