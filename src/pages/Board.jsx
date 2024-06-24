@@ -243,13 +243,19 @@ const Board = () => {
     if (editingColumn) {
       try {
         console.log("Saving column:", editingColumn);
-        setColumns((prevColumns) => ({
-          ...prevColumns,
-          [editingColumn]: {
-            ...prevColumns[editingColumn],
-            name: newColumnName,
-          },
-        }));
+        console.log("New column name:", newColumnName);
+        setColumns((prevColumns) => {
+          console.log("Previous columns:", prevColumns);
+          const updatedColumns = {
+            ...prevColumns,
+            [editingColumn]: {
+              ...prevColumns[editingColumn],
+              name: newColumnName,
+            },
+          };
+          console.log("Updated columns:", updatedColumns);
+          return updatedColumns;
+        });
         setEditingColumn(null);
         setNewColumnName("");
         console.log("Column saved successfully");
