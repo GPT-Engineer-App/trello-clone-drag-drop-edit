@@ -243,19 +243,31 @@ const Board = () => {
     if (editingColumn) {
       try {
         console.log("Saving column:", editingColumn);
-        setColumns((prevColumns) => ({
-          ...prevColumns,
-          [editingColumn]: {
-            ...prevColumns[editingColumn],
-            name: newColumnName,
-          },
-        }));
+        console.log("Current columns state:", columns);
+        setColumns((prevColumns) => {
+          const updatedColumns = {
+            ...prevColumns,
+            [editingColumn]: {
+              ...prevColumns[editingColumn],
+              name: newColumnName,
+            },
+          };
+          console.log("Updated columns state:", updatedColumns);
+          return updatedColumns;
+        });
         setEditingColumn(null);
         setNewColumnName("");
         console.log("Column saved successfully");
       } catch (error) {
         console.error("Error saving the column name:", error);
+        // Display a fallback UI or error message
+        setColumns((prevColumns) => ({
+          ...prevColumns,
+          error: "An error occurred while saving the column name. Please try again.",
+        }));
       }
+    } else {
+      console.warn("No column is being edited.");
     }
   };
 
@@ -287,6 +299,11 @@ const Board = () => {
     <ErrorBoundary>
       <Box bg={colorMode === "light" ? "white" : "gray.800"} color={colorMode === "light" ? "black" : "white"}>
         {showConfetti && <Confetti />}
+        {columns.error && (
+          <Box bg="red.500" color="white" p={4} borderRadius="md">
+            {columns.error}
+          </Box>
+        )}
         <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart} onDragUpdate={onDragUpdate}>
           <Droppable droppableId="all-columns" direction="horizontal" type="COLUMN">
             {(provided) => (
