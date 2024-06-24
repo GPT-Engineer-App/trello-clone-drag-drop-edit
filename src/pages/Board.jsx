@@ -57,6 +57,7 @@ const Board = () => {
   const [filteredColumns, setFilteredColumns] = useState(columns);
   const [dimmedColumnId, setDimmedColumnId] = useState(null);
   const [highlightedColumnId, setHighlightedColumnId] = useState(null);
+  const [isAddingColumn, setIsAddingColumn] = useState(false);
   const [searchParams] = useSearchParams();
   const { colorMode } = useColorMode();
 
@@ -219,6 +220,30 @@ const Board = () => {
     }
   };
 
+  const handleAddColumn = () => {
+    if (newColumnName.trim() === "") return;
+    const newColumnId = `column-${Date.now()}`;
+    setColumns({
+      ...columns,
+      [newColumnId]: {
+        name: newColumnName,
+        items: [],
+      },
+    });
+    setColumnOrder([...columnOrder, newColumnId]);
+    setNewColumnName("");
+    setIsAddingColumn(false);
+  };
+
+  const handleCancelAddColumn = () => {
+    setNewColumnName("");
+    setIsAddingColumn(false);
+  };
+
+  const handleNewColumnNameChange = (e) => {
+    setNewColumnName(e.target.value);
+  };
+
   return (
     <Box bg={colorMode === "light" ? "white" : "gray.800"} color={colorMode === "light" ? "black" : "white"}>
       {showConfetti && <Confetti />}
@@ -248,7 +273,7 @@ const Board = () => {
                             {...provided.dragHandleProps}
                             onClick={() => handleColumnEdit(columnId)}
                             color={colorMode === "light" ? "blue.500" : "blue.300"}
-                            fontWeight="bold" // Add this line to make the title bold
+                            fontWeight="bold"
                           >
                             {editingColumn === columnId ? (
                               <Input
@@ -343,6 +368,41 @@ const Board = () => {
                 );
               })}
               {provided.placeholder}
+              <Box
+                bg={colorMode === "light" ? "gray.100" : "gray.600"}
+                p={4}
+                borderRadius="md"
+                width="275px"
+                mr={4}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                onClick={() => setIsAddingColumn(true)}
+                cursor="pointer"
+                _hover={{ bg: colorMode === "light" ? "gray.200" : "gray.500" }}
+              >
+                {isAddingColumn ? (
+                  <>
+                    <Input
+                      value={newColumnName}
+                      onChange={handleNewColumnNameChange}
+                      placeholder="Enter column name"
+                      mb={2}
+                    />
+                    <Button onClick={handleAddColumn} colorScheme="blue" mr={2}>
+                      Add
+                    </Button>
+                    <Button onClick={handleCancelAddColumn}>
+                      Cancel
+                    </Button>
+                  </>
+                ) : (
+                  <Text fontSize="lg" color={colorMode === "light" ? "blue.500" : "blue.300"}>
+                    + Add Column
+                  </Text>
+                )}
+              </Box>
             </Box>
           )}
         </Droppable>
