@@ -244,7 +244,7 @@ const Board = () => {
                       >
                         <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
                           <Text
-                            fontSize="lg"
+                            fontSize="1rem"
                             {...provided.dragHandleProps}
                             onClick={() => handleColumnEdit(columnId)}
                             color={colorMode === "light" ? "blue.500" : "blue.300"}
