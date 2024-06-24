@@ -46,20 +46,30 @@ const initialColumns = {
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, error: null, errorInfo: null };
   }
 
   static getDerivedStateFromError(error) {
-    return { hasError: true };
+    return { hasError: true, error };
   }
 
   componentDidCatch(error, errorInfo) {
     console.error("Error caught by ErrorBoundary:", error, errorInfo);
+    this.setState({ error, errorInfo });
   }
 
   render() {
     if (this.state.hasError) {
-      return <h1>Something went wrong.</h1>;
+      return (
+        <div>
+          <h1>Something went wrong.</h1>
+          <details style={{ whiteSpace: "pre-wrap" }}>
+            {this.state.error && this.state.error.toString()}
+            <br />
+            {this.state.errorInfo.componentStack}
+          </details>
+        </div>
+      );
     }
 
     return this.props.children; 
@@ -232,6 +242,7 @@ const Board = () => {
   const handleColumnSave = () => {
     if (editingColumn) {
       try {
+        console.log("Saving column:", editingColumn);
         setColumns((prevColumns) => ({
           ...prevColumns,
           [editingColumn]: {
@@ -241,6 +252,7 @@ const Board = () => {
         }));
         setEditingColumn(null);
         setNewColumnName("");
+        console.log("Column saved successfully");
       } catch (error) {
         console.error("Error saving the column name:", error);
       }
