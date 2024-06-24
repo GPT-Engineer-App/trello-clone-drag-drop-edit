@@ -208,15 +208,19 @@ const Board = () => {
 
   const handleColumnSave = () => {
     if (editingColumn) {
-      setColumns({
-        ...columns,
-        [editingColumn]: {
-          ...columns[editingColumn],
-          name: newColumnName,
-        },
-      });
-      setEditingColumn(null);
-      setNewColumnName("");
+      try {
+        setColumns((prevColumns) => ({
+          ...prevColumns,
+          [editingColumn]: {
+            ...prevColumns[editingColumn],
+            name: newColumnName,
+          },
+        }));
+        setEditingColumn(null);
+        setNewColumnName("");
+      } catch (error) {
+        console.error("Error saving the column name:", error);
+      }
     }
   };
 
