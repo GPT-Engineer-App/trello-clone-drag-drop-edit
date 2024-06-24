@@ -248,6 +248,7 @@ const Board = () => {
                             {...provided.dragHandleProps}
                             onClick={() => handleColumnEdit(columnId)}
                             color={colorMode === "light" ? "blue.500" : "blue.300"}
+                            fontWeight="bold" // Add this line to make the title bold
                           >
                             {editingColumn === columnId ? (
                               <Input
